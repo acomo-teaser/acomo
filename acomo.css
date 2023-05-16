@@ -130,15 +130,12 @@ footer {
 footer {
 	clip-path: inset(80% 0 0 0);
 	opacity: 0;
-	transition: opacity 1s ease;
 	z-index: 3;
 	pointer-events: none;
+}
 
-	/*mask-origin: 5% 95%;
--webkit-mask-origin: 5% 95%;
-mask-position: 5% 95%;
--webkit-mask-position: 5% 95%;*/
-
+.loaded footer{
+	transition: opacity 1s ease;	
 }
 
 #container.touched #map:after {
