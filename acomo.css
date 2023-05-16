@@ -1,0 +1,284 @@
+@font-face {
+	font-family: 'JetBrains';
+	font-style: normal;
+	font-weight: 400;
+	src: url('assets/JetBrainsMono.woff2');
+}
+
+:root {
+	touch-action: pan-x pan-y;
+	height: 100%
+}
+
+* {
+	font-family: 'JetBrains', monospace;
+	font-weight: 400;
+	box-sizing: border-box;
+	color: black;
+	text-decoration: none;
+	text-rendering: geometricPrecision;
+	-webkit-touch-callout: none;
+}
+
+HTML,
+body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	background: #000;
+	overflow: hidden;
+}
+
+#container {
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	flex-direction: column;
+	min-height: 100%;
+	margin: 0;
+	font-family: sans-serif;
+	text-align: center;
+	width: 100% !important;
+	background-size: cover;
+	overflow: hidden;
+}
+
+#container:before,
+#container #map,
+footer,
+footer:before,
+#container #map:before {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-size: cover !important;
+}
+
+.loaded #container:before {
+	background: url(assets/map-bg.jpg) center top no-repeat;
+	z-index: 0;
+	opacity: 0;
+	animation: zoomIn 5s 1s ease-out forwards;
+	transform-origin: 50% 60%;
+}
+
+#container #map {
+	mask-image: radial-gradient(circle,
+		rgba(0, 0, 0, 1) 0%,
+		rgba(0, 0, 0, 1) 12%,
+		rgba(0, 0, 0, 0) 12.1%,
+		rgba(0, 0, 0, 0) 100%);
+	-webkit-mask-image: -webkit-radial-gradient(circle,
+		rgba(0, 0, 0, 1) 0%,
+		rgba(0, 0, 0, 1) 12%,
+		rgba(0, 0, 0, 0) 12.1%,
+		rgba(0, 0, 0, 0) 100%);
+	z-index: 2;
+
+	mask-origin: inherit;
+	-webkit-mask-origin: inherit;
+
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
+	opacity: 0;
+}
+
+#container #map:before {
+	background: url(assets/map.svg) center top no-repeat;
+}
+
+.loaded #container #map {
+	mask-position: inherit;
+	-webkit-mask-position: inherit;
+
+	animation: fadeIn 1s 6s ease forwards;
+}
+
+#container.touched #map {
+	transition: -webkit-mask-position .5s ease-out, mask-position .5s ease-out;
+}
+
+#container #map:after {
+	/*move indication*/
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	opacity: 1;
+	background-size: cover;
+	width: 5em;
+	height: 5em;
+	margin: auto;
+	background: url(assets/hint.svg) center no-repeat;
+	background-size: cover;
+	transition: opacity 1s ease;
+}
+
+#container #map,
+footer {
+	background-color: #FBF3DD;
+	background: url(assets/map-light.jpg) center no-repeat;
+}
+
+footer {
+	clip-path: inset(80% 0 0 0);
+	opacity: 0;
+	transition: opacity 1s ease;
+	z-index: 3;
+	pointer-events: none;
+
+	/*mask-origin: 5% 95%;
+-webkit-mask-origin: 5% 95%;
+mask-position: 5% 95%;
+-webkit-mask-position: 5% 95%;*/
+
+}
+
+#container.touched #map:after {
+	opacity: 0;
+}
+
+#claim {
+	max-width: 80%;
+	max-width: min(80%, 120vh);
+	width: 600px;
+	margin: auto;
+	pointer-events: none;
+	user-select: none;
+}
+
+#claim img {
+	z-index: 1;
+	margin: 5% auto;
+	opacity: 0;
+	height: auto;
+	pointer-events: none;
+	user-select: none;
+}
+
+.loaded #claim .clear {
+	animation: fadeIn 1s 2.5s ease forwards;
+	width: 100%;
+}
+
+.loaded #claim .not {
+	animation: fadeIn 1s 4s ease forwards;
+	width: 78%;
+}
+
+footer:before {
+	background: url(assets/map.svg) center top no-repeat;
+}
+
+footer a {
+	position: absolute;
+	max-width: 60vw;
+
+	bottom: 10%;
+	transform: translateY(50%);
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+
+	text-decoration: none;
+	color: black !important;
+	line-height: 1.4;
+}
+
+footer span {
+	border-bottom: 1.5px solid black;
+}
+
+footer.active {
+	opacity: 1;
+	pointer-events: initial;
+}
+
+footer.span {
+	text-decoration: underline;
+}
+
+.loaded #button {
+	position: absolute;
+	bottom: 10%;
+	transform: translateY(50%);
+	left: 5%;
+	height: 3em;
+	width: 3em;
+	border-radius: 50%;
+	background: #FBF3DD center no-repeat;
+	background-image: url('assets/A-black.svg');
+	background-size: 1.5em;
+	opacity: 0;
+	animation: fadeIn 1s 8s ease forwards;
+	z-index: 3;
+}
+
+#button:active,
+#button.active {
+	background-color: #526554;
+	background-image: url('assets/A-white.svg');
+}
+
+@media (max-width: 100vh) {
+
+	#container #map:before,
+	footer:before {
+		background: url(assets/map-square.svg) center top no-repeat;
+	}
+}
+
+@media (max-width: 50vh) {
+
+	#container #map:before,
+	footer:before {
+		background: url(assets/map-vert.svg) center top no-repeat;
+	}
+}
+
+@media (hover: none),
+(pointer: coarse) {
+	#container.touched #map {
+		transition: none !important;
+		mask-image: radial-gradient(circle,
+			rgba(0, 0, 0, 1) 0%,
+			rgba(0, 0, 0, 1) 20%,
+			rgba(0, 0, 0, 0) 20.1%,
+			rgba(0, 0, 0, 0) 100%);
+		-webkit-mask-image: -webkit-radial-gradient(circle,
+			rgba(0, 0, 0, 1) 0%,
+			rgba(0, 0, 0, 1) 20%,
+			rgba(0, 0, 0, 0) 20.1%,
+			rgba(0, 0, 0, 0) 100%);
+	}
+}
+
+@keyframes zoomIn {
+	0% {
+		transform: translateY(-10%) rotate(5deg) scale(1.4);
+		opacity: 0;
+	}
+
+	100% {
+		transform: translateY(0%) rotate(0deg) scale(1);
+		opacity: 1;
+	}
+
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
